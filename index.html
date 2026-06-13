@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecto Burger Club | Hamburguesas Gourmet Premium</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons para interfaz moderna -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',      // Dorado Premium
+                            goldlight: '#F3E5AB', // Dorado suave
+                            dark: '#0A0A0A',      // Negro absoluto rústico
+                            darkgray: '#141414',  // Fondo de tarjetas secundarias
+                            red: '#8B0000',       // Rojo fuego ahumado oscuro
+                            accent: '#E65100'     // Naranja brasa
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animaciones para interactividad premium */
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            50% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+        }
+        @keyframes pulse-whatsapp {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+            50% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+        .animate-pulse-whatsapp {
+            animation: pulse-whatsapp 2s infinite;
+        }
+        /* Barra de navegación de diseño personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        /* Cristal efecto cristal esmerilado */
+        .glass {
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans selection:bg-brand-gold selection:text-brand-dark overflow-x-hidden">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5 transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between">
+            <!-- Logo de la marca -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <span class="text-3xl sm:text-4xl transform group-hover:rotate-12 transition-transform duration-300">🍔</span>
+                <div>
+                    <h1 class="font-serif text-xl sm:text-2xl font-extrabold tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
+                        SELECTO<span class="text-brand-gold">.</span>
+                    </h1>
+                    <p class="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-brand-gold font-semibold">Burger Club</p>
+                </div>
+            </a>
+
+            <!-- Navegación para Escritorio -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs lg:text-sm font-semibold tracking-wider uppercase">
+                <a href="#inicio" class="text-white hover:text-brand-gold transition-colors duration-300">Inicio</a>
+                <a href="#historia" class="text-gray-300 hover:text-brand-gold transition-colors duration-300">Nuestra Historia</a>
+                <a href="#ingredientes" class="text-gray-300 hover:text-brand-gold transition-colors duration-300">Ingredientes</a>
+                <a href="#menu" class="text-gray-300 hover:text-brand-gold transition-colors duration-300">Menú Exclusivo</a>
+                <a href="#contacto" class="text-gray-300 hover:text-brand-gold transition-colors duration-300">Contacto</a>
+            </nav>
+
+            <!-- Acciones de Cabecera -->
+            <div class="flex items-center space-x-4">
+                <!-- Botón de Carrito Dinámico -->
+                <button onclick="toggleCart()" class="relative p-2.5 bg-brand-darkgray hover:bg-brand-gold hover:text-brand-dark text-white rounded-full transition-all duration-300 border border-white/10 group">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-dark animate-bounce">0</span>
+                </button>
+
+                <!-- Botón de Orden Directo -->
+                <a href="#menu" class="hidden lg:inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-brand-gold to-[#B8860B] hover:from-white hover:to-white text-brand-dark font-extrabold rounded-full transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-brand-gold/10 text-xs tracking-wider uppercase">
+                    Pide ahora 🚀
+                </a>
+
+                <!-- Disparador Menú Móvil -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-white hover:text-brand-gold transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-b border-white/10 px-4 py-6 space-y-4">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block text-lg font-medium text-white hover:text-brand-gold">Inicio</a>
+            <a href="#historia" onclick="toggleMobileMenu()" class="block text-lg font-medium text-gray-300 hover:text-brand-gold">Nuestra Historia</a>
+            <a href="#ingredientes" onclick="toggleMobileMenu()" class="block text-lg font-medium text-gray-300 hover:text-brand-gold">Ingredientes Premium</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block text-lg font-medium text-gray-300 hover:text-brand-gold">Menú del Club</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block text-lg font-medium text-gray-300 hover:text-brand-gold">Contacto</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="w-full text-center inline-flex items-center justify-center px-6 py-3 bg-brand-gold text-brand-dark font-bold rounded-full">
+                Pide ahora 🚀
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative min-h-screen pt-28 pb-12 flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-red/30 via-brand-dark to-brand-dark">
+        <!-- Rejilla geométrica elegante de fondo -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(255,255,255,0.015)_1px,_transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Columna de Redacción Persuasiva (Izquierda) -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left pt-6 lg:pt-0">
+                    <span class="inline-flex items-center space-x-2 bg-brand-red/40 border border-brand-red/60 text-brand-goldlight px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-pulse">
+                        <span class="w-2 h-2 bg-brand-gold rounded-full"></span>
+                        <span>Experiencia Gastronómica Exclusiva</span>
+                    </span>
+
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+                        Bienvenido a<br> 
+                        <span class="bg-gradient-to-r from-brand-gold via-brand-goldlight to-white bg-clip-text text-transparent">Selecto Burger Club 🍔🔥</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        No vendemos hamburguesas rápidas; creamos <span class="text-brand-gold font-semibold">obras maestras gastronómicas</span> con carnes Angus maduradas, tildes crujientes e ingredientes de procedencia selecta.
+                    </p>
+
+                    <!-- Botones de Acción de Alto Impacto -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#menu" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-brand-gold to-brand-accent text-brand-dark font-extrabold rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-brand-gold/30 text-sm tracking-wider uppercase group">
+                            <span>Pide ahora 🚀</span>
+                        </a>
+                        <a href="#ingredientes" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-full transition-all duration-300 border border-white/10 text-sm tracking-wide">
+                            <span>Conoce los ingredientes 🥬🧀🥓</span>
+                        </a>
+                    </div>
+
+                    <!-- Datos de confianza -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-white/5 max-w-md mx-auto lg:mx-0">
+                        <div class="text-center lg:text-left">
+                            <p class="text-2xl sm:text-3xl font-serif font-extrabold text-brand-gold">100%</p>
+                            <p class="text-[9px] text-gray-400 uppercase tracking-widest mt-1">Carne Angus</p>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <p class="text-2xl sm:text-3xl font-serif font-extrabold text-brand-gold">Artesanal</p>
+                            <p class="text-[9px] text-gray-400 uppercase tracking-widest mt-1">Pan Brioche</p>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <p class="text-2xl sm:text-3xl font-serif font-extrabold text-brand-gold">Premium</p>
+                            <p class="text-[9px] text-gray-400 uppercase tracking-widest mt-1">Experiencia Única</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visor Interactivo de Hamburguesas (Derecha) -->
+                <div class="lg:col-span-5 relative flex items-center justify-center">
+                    <!-- Brillo radial decorativo -->
+                    <div class="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-brand-gold/10 filter blur-[80px] -z-10 animate-pulse"></div>
+                    
+                    <div class="relative group max-w-sm sm:max-w-md">
+                        <!-- Imagen principal interactiva con fallbacks -->
+                        <img id="hero-burger-img" 
+                             src="hamburguesa carne.png" 
+                             alt="[La Emperatriz Ahumada de Selecto Burger Club]" 
+                             class="w-full h-auto object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.85)] transform group-hover:scale-105 transition-all duration-500 ease-out"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800';">
+                             
+                        <!-- Plaqueta flotante de reputación -->
+                        <div class="absolute -bottom-2 -right-2 sm:bottom-4 sm:right-4 bg-brand-dark/95 border border-brand-gold/50 px-4 py-3 rounded-2xl flex items-center space-x-3 glass shadow-2xl">
+                            <div class="bg-brand-gold text-brand-dark p-1.5 rounded-lg font-black text-xs">
+                                ⭐ 4.9
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] font-bold text-white uppercase tracking-wider">Receta de Autor</h4>
+                                <p class="text-[9px] text-gray-400">Club Calidad Premium</p>
+                            </div>
+                        </div>
+
+                        <!-- Selector interactivo para cambiar la hamburguesa en tiempo real -->
+                        <div class="absolute top-1/2 -left-4 sm:-left-8 -translate-y-1/2 flex flex-col space-y-3 z-20">
+                            <button onclick="changeHeroBurger('hamburguesa carne.png', this)" class="w-12 h-12 rounded-full border-2 border-brand-gold bg-brand-dark p-1 shadow-2xl transition hover:scale-110 active-burger-btn">
+                                <img src="hamburguesa carne.png" alt="La Emperatriz Ahumada" class="w-full h-full object-cover rounded-full" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=100'">
+                            </button>
+                            <button onclick="changeHeroBurger('hamburguesa 2.png', this)" class="w-12 h-12 rounded-full border border-white/20 bg-brand-dark p-1 shadow-2xl transition hover:scale-110">
+                                <img src="hamburguesa 2.png" alt="La Jalapeño Suprema" class="w-full h-full object-cover rounded-full" onerror="this.src='https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&q=80&w=100'">
+                            </button>
+                            <button onclick="changeHeroBurger('hamburguesa 3.png', this)" class="w-12 h-12 rounded-full border border-white/20 bg-brand-dark p-1 shadow-2xl transition hover:scale-110">
+                                <img src="hamburguesa 3.png" alt="La Selecto Signature" class="w-full h-full object-cover rounded-full" onerror="this.src='https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=100'">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestra Historia -->
+    <section id="historia" class="py-24 relative bg-brand-darkgray overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-dark to-brand-darkgray/30 opacity-60"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Ilustración visual del Club -->
+                <div class="relative order-2 lg:order-1">
+                    <div class="relative z-10 rounded-2xl overflow-hidden border border-brand-gold/15 shadow-2xl shadow-black">
+                        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800" 
+                             alt="[Preparación premium de hamburguesas al carbón]" 
+                             class="w-full h-[300px] sm:h-[450px] object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Elementos decorativos de marco dorado -->
+                    <div class="absolute -top-4 -left-4 w-20 h-20 border-t-2 border-l-2 border-brand-gold rounded-tl-2xl"></div>
+                    <div class="absolute -bottom-4 -right-4 w-20 h-20 border-b-2 border-r-2 border-brand-gold rounded-br-2xl"></div>
+                </div>
+
+                <!-- Textos e Identidad de Marca -->
+                <div class="space-y-6 order-1 lg:order-2">
+                    <span class="text-brand-gold font-serif italic text-lg tracking-wider">Un Círculo de Sabor Auténtico</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight">
+                        La obsesión absoluta por la perfección
+                    </h2>
+                    <div class="h-1 w-20 bg-brand-gold"></div>
+                    
+                    <p class="text-gray-300 text-base leading-relaxed">
+                        Fundado por cocineros apasionados y amantes incondicionales de la cocina a la parrilla, <strong>Selecto Burger Club</strong> es un santuario dedicado a enaltecer cada detalle de la hamburguesa clásica.
+                    </p>
+                    
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Nuestra filosofía de calidad es estricta: seleccionamos cortes específicos de carne de res, curamos nuestros vegetales en ambientes controlados y tostamos cada pan artesanal con mantequilla real de campo justo antes de servirlo.
+                    </p>
+
+                    <!-- Detalles Técnicos del Proceso -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-brand-red/30 p-2.5 rounded-lg border border-brand-red/40 text-brand-gold">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Origen Garantizado</h4>
+                                <p class="text-xs text-gray-400 mt-1">Carne molida diariamente sin conservantes.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-brand-red/30 p-2.5 rounded-lg border border-brand-red/40 text-brand-gold">
+                                <i data-lucide="flame" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Toque de Fuego Real</h4>
+                                <p class="text-xs text-gray-400 mt-1">Ahumados a la parrilla con leña natural.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Ingredientes Premium -->
+    <section id="ingredientes" class="py-24 bg-brand-dark relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="inline-block text-xs uppercase tracking-[0.25em] text-brand-gold font-extrabold bg-brand-gold/10 px-3 py-1 rounded">Los Secretos del Sabor</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-extrabold text-white">
+                    Nuestra Alquimia Gourmet 🥩🧀🥓
+                </h2>
+                <div class="h-1 w-24 bg-brand-gold mx-auto"></div>
+                <p class="text-gray-400 text-xs sm:text-sm">
+                    Explora y haz clic en cada ingrediente independiente para descubrir su procedencia, su rol en el perfil de sabor de la hamburguesa y sus virtudes gastronómicas.
+                </p>
+            </div>
+
+            <!-- Interfaz de Navegación de Ingredientes Interactiva -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Acordeón / Lista de Botones (7 Columnas) -->
+                <div class="lg:col-span-7 space-y-4 flex flex-col justify-center">
+                    
+                    <!-- Carne Angus -->
+                    <button onclick="selectIngredient('carne', this)" class="w-full text-left p-5 rounded-xl border border-brand-gold/30 bg-brand-darkgray hover:border-brand-gold transition-all duration-300 ingredient-btn active-ingredient flex items-center justify-between group shadow-lg">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl bg-brand-dark p-2 rounded-lg">🥩</span>
+                            <div>
+                                <h4 class="font-extrabold text-white text-base sm:text-lg tracking-wide group-hover:text-brand-gold transition-colors">Carne Angus Premium</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">El núcleo tierno y jugoso con balance 80/20.</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-brand-gold transform transition-transform group-hover:translate-x-1"></i>
+                    </button>
+
+                    <!-- Queso Cheddar -->
+                    <button onclick="selectIngredient('queso', this)" class="w-full text-left p-5 rounded-xl border border-white/5 bg-brand-darkgray/50 hover:border-brand-gold/50 transition-all duration-300 ingredient-btn flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl bg-brand-dark p-2 rounded-lg">🧀</span>
+                            <div>
+                                <h4 class="font-extrabold text-white text-base sm:text-lg tracking-wide group-hover:text-brand-gold transition-colors">Queso Cheddar Artesanal</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Fundido directo sobre el fuego ardiente de la parrilla.</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 transform transition-transform group-hover:translate-x-1"></i>
+                    </button>
+
+                    <!-- Tocineta -->
+                    <button onclick="selectIngredient('tocineta', this)" class="w-full text-left p-5 rounded-xl border border-white/5 bg-brand-darkgray/50 hover:border-brand-gold/50 transition-all duration-300 ingredient-btn flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl bg-brand-dark p-2 rounded-lg">🥓</span>
+                            <div>
+                                <h4 class="font-extrabold text-white text-base sm:text-lg tracking-wide group-hover:text-brand-gold transition-colors">Tocineta Ahumada</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Textura crujiente ideal, curada con humo de madera frutal.</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 transform transition-transform group-hover:translate-x-1"></i>
+                    </button>
+
+                    <!-- Cebolla Caramelizada -->
+                    <button onclick="selectIngredient('cebolla', this)" class="w-full text-left p-5 rounded-xl border border-white/5 bg-brand-darkgray/50 hover:border-brand-gold/50 transition-all duration-300 ingredient-btn flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl bg-brand-dark p-2 rounded-lg">🧅</span>
+                            <div>
+                                <h4 class="font-extrabold text-white text-base sm:text-lg tracking-wide group-hover:text-brand-gold transition-colors">Cebolla Caramelizada</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Notas dulces y reducción artesanal a fuego lento.</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 transform transition-transform group-hover:translate-x-1"></i>
+                    </button>
+
+                    <!-- Pan Brioche -->
+                    <button onclick="selectIngredient('pan', this)" class="w-full text-left p-5 rounded-xl border border-white/5 bg-brand-darkgray/50 hover:border-brand-gold/50 transition-all duration-300 ingredient-btn flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl bg-brand-dark p-2 rounded-lg">🍞</span>
+                            <div>
+                                <h4 class="font-extrabold text-white text-base sm:text-lg tracking-wide group-hover:text-brand-gold transition-colors">Pan Brioche Dorado</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Miga esponjosa con alta densidad de mantequilla y huevo.</p>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500 transform transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+
+                <!-- Visor / Detalle de la Selección de Ingrediente (5 Columnas) -->
+                <div class="lg:col-span-5 flex items-stretch">
+                    <div id="ingredient-display-card" class="glass border border-brand-gold/30 p-8 rounded-2xl flex flex-col justify-between w-full text-center lg:text-left transition-all duration-500 transform translate-y-0 opacity-100 shadow-2xl shadow-black/60">
+                        <div class="space-y-6">
+                            <!-- Cabecera dinámica -->
+                            <div class="flex flex-col items-center lg:items-start space-y-3">
+                                <div id="ing-icon-bg" class="w-20 h-20 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-4xl">
+                                    🥩
+                                </div>
+                                <h3 id="ing-title" class="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide">Carne Angus Premium</h3>
+                            </div>
+
+                            <hr class="border-white/5">
+
+                            <!-- Descripciones del ingrediente seleccionado -->
+                            <div class="space-y-4 text-sm">
+                                <div>
+                                    <h5 class="text-brand-gold font-bold text-xs uppercase tracking-widest mb-1">Procedencia y Calidad</h5>
+                                    <p id="ing-origin" class="text-gray-300">Reses Angus seleccionadas de ganadería libre y sostenible. Corte premium elaborado diariamente bajo estándares internacionales en nuestro taller.</p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="text-brand-gold font-bold text-xs uppercase tracking-widest mb-1">¿Por qué mejora el sabor?</h5>
+                                    <p id="ing-secret" class="text-gray-300">Nuestra proporción exacta de grasas naturales se funde en su propio jugo sobre la parrilla de hierro fundido, creando una increíble costra crujiente de Maillard.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Distintivo Gourmet -->
+                        <div class="bg-brand-red/25 border border-brand-red/45 p-4 rounded-xl flex items-center space-x-3 justify-center lg:justify-start mt-6">
+                            <span class="text-2xl">👑</span>
+                            <span id="ing-badge" class="text-xs font-bold text-brand-goldlight tracking-wide">Premio del Club a la Máxima Frescura.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Menú Exclusivo Selecto Burger Club -->
+    <section id="menu" class="py-24 bg-brand-darkgray relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-dark to-transparent opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-gold font-serif italic text-lg block">La Carta Privada de los Socios</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-extrabold text-white tracking-wide">
+                    El Menú Premium del Club 🌟
+                </h2>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Tres creaciones meticulosas diseñadas para satisfacer a los paladares más rigurosos. Elaboradas con ingredientes de máxima frescura.
+                </p>
+                <div class="h-1 w-24 bg-brand-gold mx-auto"></div>
+            </div>
+
+            <!-- Grid de Tarjetas del Menú -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta 1: La Emperatriz Ahumada -->
+                <div class="bg-brand-dark border border-white/5 hover:border-brand-gold/40 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-brand-gold/10 group">
+                    <div class="relative overflow-hidden aspect-square flex items-center justify-center p-6 bg-brand-darkgray/40">
+                        <img src="hamburguesa carne.png" 
+                             alt="[La Emperatriz Ahumada de Selecto Burger Club]" 
+                             class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800';">
+                        
+                        <!-- Badges Informativas -->
+                        <span class="absolute top-4 left-4 bg-brand-red text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full border border-brand-red/55 shadow-lg">
+                            Favorita del Club 🔥
+                        </span>
+                        <span class="absolute bottom-4 right-4 bg-brand-dark/95 text-brand-gold text-lg font-bold px-4 py-1.5 rounded-xl border border-brand-gold/30">
+                            $15.90
+                        </span>
+                    </div>
+
+                    <div class="p-6 space-y-4 flex-grow flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-2xl font-bold text-white group-hover:text-brand-gold transition-colors">La Emperatriz Ahumada</h3>
+                            <p class="text-xs text-gray-300 font-light leading-relaxed">
+                                Una combinación irresistible de carne Angus, tocineta crujiente, queso cheddar fundido y cebolla caramelizada sobre pan brioche artesanal.
+                            </p>
+                        </div>
+
+                        <!-- Ingredientes Detallados -->
+                        <div class="space-y-2">
+                            <h5 class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Ingredientes destacados:</h5>
+                            <ul class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px] text-gray-400">
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Carne Angus Premium</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Tocineta ahumada</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Cheddar fundido</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Cebolla caramelizada</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Copywriting persuasivo -->
+                        <blockquote class="border-l-2 border-brand-gold pl-3 text-xs italic text-gray-400">
+                            "La favorita de quienes buscan intensidad y carácter en cada bocado."
+                        </blockquote>
+
+                        <button onclick="addToCart('La Emperatriz Ahumada', 15.90, 'hamburguesa carne.png')" class="w-full inline-flex items-center justify-center space-x-2 px-4 py-3 bg-brand-gold hover:bg-white text-brand-dark font-extrabold rounded-xl transition-all duration-300 transform active:scale-95 tracking-wide text-xs uppercase shadow-md">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Agregar al Pedido</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: La Jalapeño Suprema -->
+                <div class="bg-brand-dark border border-brand-gold/30 hover:border-brand-gold rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-brand-gold/20 relative group">
+                    <!-- Insignia Destacada Especial -->
+                    <div class="absolute top-0 right-0 bg-brand-gold text-brand-dark font-extrabold text-[9px] tracking-widest uppercase px-4 py-1.5 rounded-bl-xl z-20 shadow-md">
+                        MÁS COMPRADA ⭐
+                    </div>
+
+                    <div class="relative overflow-hidden aspect-square flex items-center justify-center p-6 bg-brand-darkgray/40">
+                        <img src="hamburguesa 2.png" 
+                             alt="[La Jalapeño Suprema de Selecto Burger Club]" 
+                             class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&q=80&w=800';">
+                        
+                        <span class="absolute bottom-4 right-4 bg-brand-dark/95 text-brand-gold text-lg font-bold px-4 py-1.5 rounded-xl border border-brand-gold/30">
+                            $16.50
+                        </span>
+                    </div>
+
+                    <div class="p-6 space-y-4 flex-grow flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-2xl font-bold text-white group-hover:text-brand-gold transition-colors flex items-center space-x-2">
+                                <span>La Jalapeño Suprema</span>
+                                <span class="text-base">🌶️</span>
+                            </h3>
+                            <p class="text-xs text-gray-300 font-light leading-relaxed">
+                                Una explosión de sabor con queso cheddar, jalapeños frescos seleccionados, cebolla morada crujiente, pepinillos y salsa especial de la casa.
+                            </p>
+                        </div>
+
+                        <!-- Ingredientes Detallados -->
+                        <div class="space-y-2">
+                            <h5 class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Ingredientes destacados:</h5>
+                            <ul class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px] text-gray-400">
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Carne Angus Premium</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Jalapeños frescos</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Pepinillos gourmet</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Salsa Secreta Club</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Copywriting persuasivo -->
+                        <blockquote class="border-l-2 border-brand-gold pl-3 text-xs italic text-gray-400">
+                            "Para los amantes del sabor atrevido y de las experiencias inolvidables."
+                        </blockquote>
+
+                        <button onclick="addToCart('La Jalapeño Suprema', 16.50, 'hamburguesa 2.png')" class="w-full inline-flex items-center justify-center space-x-2 px-4 py-3 bg-brand-gold hover:bg-white text-brand-dark font-extrabold rounded-xl transition-all duration-300 transform active:scale-95 tracking-wide text-xs uppercase shadow-md">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Agregar al Pedido</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: La Selecto Signature -->
+                <div class="bg-brand-dark border border-white/5 hover:border-brand-gold/40 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-brand-gold/10 group">
+                    <div class="relative overflow-hidden aspect-square flex items-center justify-center p-6 bg-brand-darkgray/40">
+                        <img src="hamburguesa 3.png" 
+                             alt="[La Selecto Signature de Selecto Burger Club]" 
+                             class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800';">
+                        
+                        <!-- Badges Informativas -->
+                        <span class="absolute top-4 left-4 bg-brand-gold text-brand-dark text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-lg">
+                            Recomendación Chef 🌟
+                        </span>
+                        <span class="absolute bottom-4 right-4 bg-brand-dark/95 text-brand-gold text-lg font-bold px-4 py-1.5 rounded-xl border border-brand-gold/30">
+                            $17.20
+                        </span>
+                    </div>
+
+                    <div class="p-6 space-y-4 flex-grow flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-2xl font-bold text-white group-hover:text-brand-gold transition-colors">La Selecto Signature</h3>
+                            <p class="text-xs text-gray-300 font-light leading-relaxed">
+                                La hamburguesa insignia de la casa, preparada con pechuga crujiente de pollo premium, tocineta ahumada, vegetales hidratados, queso artesanal y salsa secreta Selecto.
+                            </p>
+                        </div>
+
+                        <!-- Ingredientes Detallados -->
+                        <div class="space-y-2">
+                            <h5 class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Ingredientes destacados:</h5>
+                            <ul class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px] text-gray-400">
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Pechuga Crujiente</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Tocineta ahumada</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Queso artesanal</span>
+                                </li>
+                                <li class="flex items-center space-x-1">
+                                    <span class="text-brand-gold">✓</span> <span>Salsa Secreta Club</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Copywriting persuasivo -->
+                        <blockquote class="border-l-2 border-brand-gold pl-3 text-xs italic text-gray-400">
+                            "La hamburguesa que representa el verdadero espíritu de Selecto Burger Club."
+                        </blockquote>
+
+                        <button onclick="addToCart('La Selecto Signature', 17.20, 'hamburguesa 3.png')" class="w-full inline-flex items-center justify-center space-x-2 px-4 py-3 bg-brand-gold hover:bg-white text-brand-dark font-extrabold rounded-xl transition-all duration-300 transform active:scale-95 tracking-wide text-xs uppercase shadow-md">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Agregar al Pedido</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Persuasiva de Copywriting Gourmet -->
+    <section class="py-24 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-red to-[#4A0000] text-center relative overflow-hidden border-t border-b border-brand-gold/15">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10 space-y-6">
+            <span class="text-brand-gold text-4xl block animate-bounce">🔥</span>
+            <h3 class="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight uppercase tracking-wider">
+                Cada hamburguesa cuenta una historia de sabor
+            </h3>
+            <p class="text-brand-goldlight text-lg sm:text-xl font-light italic max-w-2xl mx-auto">
+                No vendemos comida rápida para saciar un instante. Creamos experiencias culinarias artesanales de sabor inolvidable para los miembros más exigentes de nuestro club.
+            </p>
+            <div class="pt-4">
+                <a href="#menu" class="inline-flex items-center space-x-3 px-8 py-4 bg-brand-gold text-brand-dark font-extrabold rounded-full transition duration-300 hover:bg-white hover:scale-105 uppercase tracking-wider text-xs shadow-2xl">
+                    <span>Satisfacer mi deseo ahora 🚀</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios de Socios del Club -->
+    <section class="py-24 bg-brand-dark text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-gold uppercase tracking-[0.2em] text-xs font-bold block">Opiniones del Club</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-extrabold">Lo que comentan nuestros Miembros ⭐</h2>
+                <div class="h-1 w-20 bg-brand-gold mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonio 1 -->
+                <div class="glass p-8 rounded-2xl border border-white/5 space-y-4 relative">
+                    <span class="absolute top-6 right-6 text-brand-gold/10 text-6xl font-serif">“</span>
+                    <div class="flex items-center space-x-1 text-brand-gold">
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                    </div>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        "La Jalapeño Suprema es una auténtica revelación culinaria. Los jalapeños tienen el picante exacto sin opacar el perfil de la carne Angus madurada."
+                    </p>
+                    <hr class="border-white/5">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center font-bold text-brand-gold text-sm">
+                            CR
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-white">Carlos Restrepo</h5>
+                            <p class="text-[9px] text-gray-400">Socio Diamante</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="glass p-8 rounded-2xl border border-brand-gold/30 space-y-4 relative">
+                    <span class="absolute top-6 right-6 text-brand-gold/25 text-6xl font-serif">“</span>
+                    <div class="flex items-center space-x-1 text-brand-gold">
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                    </div>
+                    <p class="text-gray-200 text-xs sm:text-sm leading-relaxed font-medium">
+                        "Un nivel de ingredientes inigualable. El pan brioche soporta los jugos de la carne perfectamente. La Emperatriz Ahumada es insuperable."
+                    </p>
+                    <hr class="border-white/10">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center font-black text-sm">
+                            AM
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-white">Andrea Mendoza</h5>
+                            <p class="text-[9px] text-brand-gold font-semibold">Crítica de Cocina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="glass p-8 rounded-2xl border border-white/5 space-y-4 relative">
+                    <span class="absolute top-6 right-6 text-brand-gold/10 text-6xl font-serif">“</span>
+                    <div class="flex items-center space-x-1 text-brand-gold">
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-gold text-brand-gold"></i>
+                    </div>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        "Hice un pedido a domicilio desde esta web y el empaque premium conservó el calor y la textura crujiente de las papas. Excelente logística."
+                    </p>
+                    <hr class="border-white/5">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center font-bold text-brand-gold text-sm">
+                            JS
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-white">Juan Pablo Soler</h5>
+                            <p class="text-[9px] text-gray-400">Socio VIP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Contacto -->
+    <section id="contacto" class="py-24 bg-brand-darkgray relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Datos informativos -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-brand-gold uppercase tracking-[0.2em] text-xs font-bold block">Contacto Oficial</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-extrabold text-white">Conéctate al Club 🤝</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        ¿Tienes dudas sobre alérgenos, deseas coordinar un evento culinario cerrado o hacer un pedido personalizado de gran volumen? Déjanos tus datos.
+                    </p>
+
+                    <div class="space-y-4 pt-4 text-xs sm:text-sm">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-brand-gold"></i>
+                            <span class="text-gray-300">Av. Gourmet 123, Distrito Gastronómico</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-brand-gold"></i>
+                            <span class="text-gray-300">+57 300 123 4567</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-brand-gold"></i>
+                            <span class="text-gray-300">contacto@selectoburger.club</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario premium -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="glass p-8 rounded-2xl border border-white/10 space-y-6 shadow-2xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-xs font-bold uppercase text-brand-gold tracking-widest mb-2">Nombre completo</label>
+                                <input type="text" id="name" required class="w-full bg-brand-dark/90 border border-white/10 focus:border-brand-gold rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all duration-300" placeholder="Ej. Robert De Niro">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-xs font-bold uppercase text-brand-gold tracking-widest mb-2">Teléfono móvil</label>
+                                <input type="tel" id="phone" required class="w-full bg-brand-dark/90 border border-white/10 focus:border-brand-gold rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all duration-300" placeholder="Ej. +57 300 123 4567">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-xs font-bold uppercase text-brand-gold tracking-widest mb-2">Correo electrónico</label>
+                            <input type="email" id="email" required class="w-full bg-brand-dark/90 border border-white/10 focus:border-brand-gold rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all duration-300" placeholder="correo@ejemplo.com">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-bold uppercase text-brand-gold tracking-widest mb-2">Mensaje o Solicitud Especial</label>
+                            <textarea id="message" rows="4" required class="w-full bg-brand-dark/90 border border-white/10 focus:border-brand-gold rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all duration-300" placeholder="¿Cómo podemos ayudarte?"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full inline-flex items-center justify-center space-x-2 px-6 py-4 bg-brand-gold hover:bg-white text-brand-dark font-extrabold rounded-xl transition duration-300 transform active:scale-95 uppercase tracking-widest text-xs">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Enviar Mensaje</span>
+                        </button>
+
+                        <!-- Mensaje de éxito interactivo -->
+                        <div id="form-success" class="hidden bg-green-500/10 border border-green-500 text-green-300 p-4 rounded-xl text-center text-xs font-bold">
+                            ¡Mensaje recibido con éxito! Un chef del club te responderá en breve. 🍔
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section class="py-16 bg-brand-dark text-center border-t border-white/5 relative">
+        <div class="max-w-4xl mx-auto px-4 space-y-6">
+            <span class="text-3xl">📸</span>
+            <h4 class="font-serif text-2xl font-bold text-white">Forma parte de nuestra comunidad</h4>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
+                Únete a nuestro perfil de Instagram y mantente al tanto de catas secretas, códigos de descuento y material exclusivo detrás de la cocina.
+            </p>
+            <div>
+                <a href="https://www.instagram.com/selectoburgerclub/" target="_blank" class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-extrabold rounded-full transition duration-300 transform hover:scale-105 tracking-wider text-xs uppercase shadow-lg">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                    <span>Síguenos en Instagram @selectoburgerclub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Premium -->
+    <footer class="bg-[#050505] text-gray-400 border-t border-white/5 pt-16 pb-8 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            
+            <!-- Logo e Introducción -->
+            <div class="space-y-4">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <span class="text-3xl">🍔</span>
+                    <div>
+                        <h1 class="font-serif text-lg font-extrabold tracking-wider text-white">SELECTO.</h1>
+                        <p class="text-[9px] uppercase tracking-[0.3em] text-brand-gold font-semibold">Burger Club</p>
+                    </div>
+                </a>
+                <p class="text-[11px] text-gray-500 leading-relaxed">
+                    Artesanía gourmet sobre la brasa del carbón. Redefiniendo el estándar premium de las hamburguesas.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="p-2 bg-brand-darkgray hover:bg-brand-gold hover:text-brand-dark rounded-full transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                    <a href="https://www.instagram.com/selectoburgerclub/" target="_blank" class="p-2 bg-brand-darkgray hover:bg-brand-gold hover:text-brand-dark rounded-full transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="p-2 bg-brand-darkgray hover:bg-brand-gold hover:text-brand-dark rounded-full transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <!-- Horarios de Fuego -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white text-xs uppercase tracking-widest text-brand-gold">Horarios de Fuego</h4>
+                <ul class="space-y-2 text-gray-400 text-[11px]">
+                    <li class="flex justify-between border-b border-white/5 pb-1"><span>Lunes a Jueves:</span> <span class="text-white">12:00 PM - 10:00 PM</span></li>
+                    <li class="flex justify-between border-b border-white/5 pb-1"><span>Viernes a Sábado:</span> <span class="text-white">12:00 PM - 12:00 AM</span></li>
+                    <li class="flex justify-between pb-1"><span>Domingos:</span> <span class="text-white">12:00 PM - 9:00 PM</span></li>
+                </ul>
+            </div>
+
+            <!-- Navegación Corta -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white text-xs uppercase tracking-widest text-brand-gold">Navegación</h4>
+                <ul class="space-y-2">
+                    <li><a href="#inicio" class="hover:text-brand-gold transition-colors">Inicio</a></li>
+                    <li><a href="#historia" class="hover:text-brand-gold transition-colors">Nuestra Historia</a></li>
+                    <li><a href="#ingredientes" class="hover:text-brand-gold transition-colors">Ingredientes Premium</a></li>
+                    <li><a href="#menu" class="hover:text-brand-gold transition-colors">Menú Exclusivo</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Privado -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white text-xs uppercase tracking-widest text-brand-gold">Newsletter VIP</h4>
+                <p class="text-gray-500 text-[11px] leading-relaxed">Suscríbete para recibir invitaciones exclusivas a catas y pre-lanzamientos de recetas.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Tu correo" class="bg-brand-darkgray border border-white/10 rounded-l-xl px-3 py-2 focus:outline-none focus:border-brand-gold text-white text-xs w-full">
+                    <button class="bg-brand-gold text-brand-dark font-extrabold px-4 py-2 rounded-r-xl hover:bg-white text-xs transition-colors">Unirse</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-t border-white/5 pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-gray-600">
+            <p>© 2026 Selecto Burger Club. Todos los derechos reservados.</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <a href="#" class="hover:text-brand-gold transition-colors">Privacidad</a>
+                <a href="#" class="hover:text-brand-gold transition-colors">Condiciones</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/573001234567?text=Hola%20Selecto%20Burger%20Club%20%F0%9F%8D%95%2C%20quiero%20realizar%20un%20pedido." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl animate-pulse-whatsapp transition duration-300"
+       title="Hacer pedido por WhatsApp">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-2.32 0-4.57.887-6.21 2.53-3.419 3.424-3.424 8.993-.013 12.418.913.913 2.023 1.547 3.23 1.873l.142.035c.16.04.31.06.46.06.44 0 .86-.17 1.18-.49l1.64-1.64c.26-.26.39-.62.35-.98l-.13-.77c-.07-.42-.31-.79-.67-1.02l-1.42-.92c-.37-.24-.84-.23-1.2.03l-.47.34c-.21.15-.49.12-.66-.07-.46-.51-.83-1.11-1.1-1.76-.08-.2-.05-.43.08-.6l.46-.59c.25-.32.29-.76.11-1.12l-.71-1.45c-.2-.41-.6-.68-1.06-.72l-.76-.07c-.45-.04-.88.16-1.13.53l-.11.16a7.19 7.19 0 0 0-.25 6.01c.47 1.57 1.45 2.94 2.76 3.88l.09.06c1.23.83 2.68 1.27 4.16 1.27 3.96 0 7.18-3.22 7.18-7.18 0-3.96-3.22-7.18-7.18-7.18z"/>
+            <path d="M19.057 18.022a9.917 9.917 0 0 0 2.444-6.522c0-5.514-4.486-10-10-10S1.5 5.986 1.5 11.5c0 2.106.651 4.12 1.879 5.823L1.54 22.427a.998.998 0 0 0 1.254 1.254l5.104-1.839a9.885 9.885 0 0 0 4.602 1.158c5.514 0 10-4.486 10-10 0-1.874-.518-3.693-1.443-5.278zM12.5 21a7.95 7.95 0 0 1-4.088-1.127.994.994 0 0 0-.742-.084l-3.327 1.2 1.2-3.325a.999.999 0 0 0-.084-.741A7.952 7.952 0 0 1 4.5 12.5c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+        </svg>
+    </a>
+
+    <!-- Lateral Desplegable del Carrito de Compras (Drawer) -->
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-96 z-50 transform translate-x-full transition-transform duration-500 ease-in-out glass border-l border-brand-gold/25 flex flex-col justify-between shadow-2xl">
+        <!-- Cabecera del Carrito -->
+        <div class="p-6 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="shopping-cart" class="w-5 h-5 text-brand-gold"></i>
+                <h3 class="font-serif text-lg font-bold text-white">Tu Pedido Actual</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 text-gray-400 hover:text-white transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Lista de Artículos (Dinámica) -->
+        <div id="cart-items" class="p-6 flex-grow overflow-y-auto space-y-4">
+            <!-- Mensaje Inicial de Carrito Vacío -->
+            <div id="empty-cart-message" class="text-center py-12 space-y-4">
+                <span class="text-4xl block">🧺</span>
+                <p class="text-gray-400 text-xs">El carrito está vacío temporalmente.</p>
+                <a href="#menu" onclick="toggleCart()" class="inline-block text-xs font-bold uppercase tracking-wider text-brand-gold underline">Ver Menú Exclusivo</a>
+            </div>
+        </div>
+
+        <!-- Resumen y Checkout del Carrito -->
+        <div class="p-6 border-t border-white/10 space-y-4 bg-brand-dark/95">
+            <div class="flex items-center justify-between text-xs">
+                <span class="text-gray-400">Subtotal del Club:</span>
+                <span id="cart-subtotal" class="font-extrabold text-white text-sm">$0.00</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+                <span class="text-gray-400">Costo de Envío:</span>
+                <span class="text-green-500 font-bold uppercase tracking-wider text-[10px]">¡Gratuito para Miembros!</span>
+            </div>
+            <hr class="border-white/5">
+            <div class="flex justify-between items-center">
+                <span class="text-sm font-bold text-white">Total:</span>
+                <span id="cart-total" class="text-brand-gold font-serif text-xl font-bold">$0.00</span>
+            </div>
+
+            <!-- Botón de Envío Directo WhatsApp -->
+            <button onclick="checkoutWhatsApp()" id="checkout-btn" disabled class="w-full inline-flex items-center justify-center space-x-2 px-4 py-4 bg-gradient-to-r from-brand-gold to-brand-accent disabled:opacity-40 disabled:cursor-not-allowed text-brand-dark font-extrabold rounded-xl transition-all duration-300 transform active:scale-95 text-xs uppercase tracking-widest">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                <span>Confirmar Pedido WhatsApp</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Fondo opaco del Carrito (Backdrop) -->
+    <div id="cart-backdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/80 z-40 hidden transition-opacity duration-500"></div>
+
+    <script>
+        // Inicialización de Iconos Lucide
+        lucide.createIcons();
+
+        // Reducir tamaño del Header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 40) {
+                header.classList.remove('h-20', 'sm:h-24');
+                header.classList.add('h-16', 'shadow-2xl', 'bg-brand-dark/95');
+            } else {
+                header.classList.remove('h-16', 'shadow-2xl', 'bg-brand-dark/95');
+                header.classList.add('h-20', 'sm:h-24');
+            }
+        });
+
+        // Alternar Menú Móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            menuIcon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons();
+        }
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Control de cambio dinámico en el Hero
+        function changeHeroBurger(imagePath, element) {
+            const heroImg = document.getElementById('hero-burger-img');
+            heroImg.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                heroImg.src = imagePath;
+                heroImg.classList.remove('scale-95', 'opacity-0');
+            }, 250);
+
+            // Actualizar diseño activo de botones
+            document.querySelectorAll('#inicio button').forEach(btn => {
+                btn.classList.remove('border-brand-gold', 'active-burger-btn');
+                btn.classList.add('border-white/20');
+            });
+            element.classList.add('border-brand-gold', 'active-burger-btn');
+            element.classList.remove('border-white/20');
+        }
+
+        // Datos e información de la Sección de Ingredientes Premium
+        const ingredientsDetails = {
+            carne: {
+                title: 'Carne Angus Premium',
+                origin: 'Reses Angus seleccionadas de ganadería libre y sostenible. Corte premium elaborado diariamente bajo estándares internacionales en nuestro taller.',
+                secret: 'Nuestra proporción exacta de grasas naturales se funde en su propio jugo sobre la parrilla de hierro fundido, creando una increíble costra crujiente de Maillard.',
+                badge: 'Premio del Club a la Máxima Frescura.',
+                icon: '🥩'
+            },
+            queso: {
+                title: 'Queso Cheddar Artesanal',
+                origin: 'Cheddar madurado por 6 meses en bodega con humedad controlada. Procedente de pequeños productores lácteos locales.',
+                secret: 'Su fundido lento crea una capa cremosa y un perfil salado profundo que amalgama de forma majestuosa la carne y el pan.',
+                badge: 'Maduración tradicional garantizada.',
+                icon: '🧀'
+            },
+            tocineta: {
+                title: 'Tocineta Ahumada',
+                origin: 'Cortes seleccionados de panza de cerdo ahumada lentamente con astillas de madera de manzano por más de 10 horas.',
+                secret: 'Aporta el contrapunto crujiente indispensable, con notas sutilmente dulces que elevan la sensación salina tridimensional del bocado.',
+                badge: 'Ahumado artesanal premium sin aditivos.',
+                icon: '🥓'
+            },
+            cebolla: {
+                title: 'Cebolla Caramelizada',
+                origin: 'Cebollas dulces locales procesadas a fuego ultralento durante horas, sin azúcares añadidos.',
+                secret: 'Su dulzor natural balancea la acidez de las salsas y aporta una untuosidad sedosa única en boca.',
+                badge: 'Cocción lenta de 4 horas.',
+                icon: '🧅'
+            },
+            pan: {
+                title: 'Pan Brioche Dorado',
+                origin: 'Amasado y horneado cada madrugada en nuestro obrador con un alto porcentaje de mantequilla y huevos orgánicos.',
+                secret: 'Su miga sedosa y elástica absorbe la jugosidad de la carne sin desmoronarse, garantizando un agarre perfecto y limpio.',
+                badge: 'Horneado diario exclusivo.',
+                icon: '🍞'
+            }
+        };
+
+        function selectIngredient(key, element) {
+            // Actualizar estilo en la barra de selección
+            document.querySelectorAll('.ingredient-btn').forEach(btn => {
+                btn.classList.remove('border-brand-gold', 'bg-brand-darkgray', 'shadow-lg');
+                btn.classList.add('border-white/5', 'bg-brand-darkgray/50');
+                btn.querySelector('i').classList.replace('text-brand-gold', 'text-gray-500');
+            });
+
+            element.classList.add('border-brand-gold', 'bg-brand-darkgray', 'shadow-lg');
+            element.classList.remove('border-white/5', 'bg-brand-darkgray/50');
+            element.querySelector('i').classList.replace('text-gray-500', 'text-brand-gold');
+
+            // Transición suave en visor de datos
+            const displayCard = document.getElementById('ingredient-display-card');
+            displayCard.classList.add('opacity-0', 'translate-y-4');
+
+            setTimeout(() => {
+                const info = ingredientsDetails[key];
+                document.getElementById('ing-title').innerText = info.title;
+                document.getElementById('ing-origin').innerText = info.origin;
+                document.getElementById('ing-secret').innerText = info.secret;
+                document.getElementById('ing-badge').innerText = info.badge;
+                document.getElementById('ing-icon-bg').innerText = info.icon;
+
+                displayCard.classList.remove('opacity-0', 'translate-y-4');
+            }, 250);
+        }
+
+        // Lógica del Carrito de Compras en Memoria
+        let cartList = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            
+            drawer.classList.toggle('translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            cartItemsContainer.innerHTML = '';
+
+            if (cartList.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div id="empty-cart-message" class="text-center py-12 space-y-4">
+                        <span class="text-4xl block">🧺</span>
+                        <p class="text-gray-400 text-xs">El carrito está vacío temporalmente.</p>
+                        <a href="#menu" onclick="toggleCart()" class="inline-block text-xs font-bold uppercase tracking-wider text-brand-gold underline">Ver Menú Exclusivo</a>
+                    </div>
+                `;
+                cartCount.innerText = '0';
+                cartSubtotal.innerText = '$0.00';
+                cartTotal.innerText = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            let sumSubtotal = 0;
+            let quantityTotal = 0;
+
+            cartList.forEach((item, index) => {
+                sumSubtotal += item.price * item.quantity;
+                quantityTotal += item.quantity;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center justify-between bg-brand-dark/50 border border-white/5 p-3 rounded-xl space-x-3';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain bg-brand-darkgray rounded-lg" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=100';">
+                    <div class="flex-grow text-left">
+                        <h4 class="text-[11px] font-bold text-white line-clamp-1">${item.name}</h4>
+                        <p class="text-xs text-brand-gold font-bold">$${item.price.toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="decrementQuantity(${index})" class="px-2 py-0.5 bg-brand-darkgray hover:bg-white/10 text-white rounded text-[11px] font-bold">-</button>
+                        <span class="text-xs font-bold text-white w-4 text-center">${item.quantity}</span>
+                        <button onclick="incrementQuantity(${index})" class="px-2 py-0.5 bg-brand-darkgray hover:bg-white/10 text-white rounded text-[11px] font-bold">+</button>
+                        <button onclick="removeFromCart(${index})" class="text-brand-red hover:text-red-400 ml-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+
+            cartCount.innerText = quantityTotal;
+            cartSubtotal.innerText = `$${sumSubtotal.toFixed(2)}`;
+            cartTotal.innerText = `$${sumSubtotal.toFixed(2)}`;
+
+            lucide.createIcons();
+        }
+
+        function addToCart(name, price, image) {
+            const foundIndex = cartList.findIndex(item => item.name === name);
+
+            if (foundIndex > -1) {
+                cartList[foundIndex].quantity += 1;
+            } else {
+                cartList.push({ name, price, image, quantity: 1 });
+            }
+
+            updateCartUI();
+
+            // Animación del indicador del carrito
+            const countBadge = document.getElementById('cart-count');
+            countBadge.classList.add('scale-150', 'bg-brand-gold', 'text-brand-dark');
+            setTimeout(() => {
+                countBadge.classList.remove('scale-150', 'bg-brand-gold', 'text-brand-dark');
+            }, 400);
+
+            // Abrir automáticamente el panel lateral para invitar a la conversión
+            setTimeout(() => {
+                toggleCart();
+            }, 300);
+        }
+
+        function incrementQuantity(index) {
+            cartList[index].quantity += 1;
+            updateCartUI();
+        }
+
+        function decrementQuantity(index) {
+            if (cartList[index].quantity > 1) {
+                cartList[index].quantity -= 1;
+            } else {
+                cartList.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            cartList.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Enviar pedido formateado hacia WhatsApp
+        function checkoutWhatsApp() {
+            if (cartList.length === 0) return;
+
+            let textMessage = `🍔 *¡Hola Selecto Burger Club!* Quiero realizar el siguiente pedido desde el portal web:%0A%0A`;
+            let accumTotal = 0;
+
+            cartList.forEach(item => {
+                const itemCost = item.price * item.quantity;
+                textMessage += `• *${item.quantity}x* ${item.name} ($${item.price.toFixed(2)} c/u) -> *$${itemCost.toFixed(2)}*%0A`;
+                accumTotal += itemCost;
+            });
+
+            textMessage += `%0A💵 *Total Neto:* $${accumTotal.toFixed(2)}%0A%0A`;
+            textMessage += `📍 _Por favor coordinar los detalles de la dirección de entrega y el medio de pago deseado._`;
+
+            // Abre conversación directo en una pestaña nueva
+            const whatsappBaseUrl = `https://wa.me/573001234567?text=${textMessage}`;
+            window.open(whatsappBaseUrl, '_blank');
+        }
+
+        // Envío controlado del formulario de contacto
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successAlert = document.getElementById('form-success');
+            
+            successAlert.classList.remove('hidden');
+            document.getElementById('contact-form').reset();
+
+            setTimeout(() => {
+                successAlert.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
